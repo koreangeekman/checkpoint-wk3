@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <!-- SECTION -->
+  <!-- SECTION HEADER -->
   <header>
     <nav class="navbar navbar-dark navbar-expand bg-dark text-light no-select">
       <a class="navbar-brand ms-3" href="#"> <i class="mdi mdi-network-pos"></i>
@@ -37,39 +37,108 @@
       </div>
       <span class="d-flex w-50 justify-content-between align-items-center fs-5">
         <!-- total count stats -->
-        <p class="mb-0" id="totalFolderCount">Folders: #</p>
-        <p class="mb-0" id="totalNotesCount">Notes: #</p>
-        <i class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-note-plus"
-          onclick="app.NotesController.addNote()"></i>
+        <span class="d-flex" onclick="app.NotesController.clickOut()">
+          <p class="mb-0 px-5" id="totalFolderCount">Folders: #</p>
+          <p class="mb-0 px-5" id="totalNotesCount">Notes: #</p>
+        </span>
+        <!-- NEW FOLDER / NOTE BUTTON -->
+        <span class="px-2">
+          <i type="button" data-bs-toggle="offcanvas" data-bs-target="#addNewFolder"
+            aria-controls="offcanvasWithBackdrop"
+            class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-folder-plus"></i>
+          <i type="button" data-bs-toggle="offcanvas" data-bs-target="#addNewNote" aria-controls="offcanvasWithBackdrop"
+            class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-note-plus"></i>
+        </span>
       </span>
     </nav>
+    <!-- !SECTION HEADER -->
   </header>
 
-  <!-- SECTION -->
+  <!-- SECTION MAIN -->
   <main id="router-view">
     <!-- PRIMARY VIEWPORT -->
 
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 p-3 d-flex align-items-center justify-content-center">
-          <div class="d-flex flex-row flex-wrap justi" id="folderList">
+      <div class="row p-3 justify-content-center">
+
+        <div class="col-8 p-5 d-flex align-items-center justify-content-center d-none" id="z2">
+          <div class="card w-100 justify-content-center shadow p-5" id="notesCard">
+            <!-- SECTION NOTE CARD VIEWPORT -->
+
+            <!-- !SECTION NOTE CARD VIEWPORT -->
+          </div>
+        </div>
+
+        <div class="col-12 p-5 d-flex align-items-center justify-content-center d-none" id="z1">
+          <div class="card d-flex flex-row flex-wrap justify-content-center p-2" id="notesList">
+            <!-- SECTION NOTES LIST VIEWPORT -->
+            <!-- !SECTION NOTES LIST VIEWPORT -->
+          </div>
+        </div>
+
+        <div class="col-12 pt-4 d-flex align-items-center justify-content-center" id="z0">
+          <div class="d-flex flex-row flex-wrap" id="folderViewPort">
             <!-- SECTION FOLDER LIST VIEWPORT -->
             <!-- !SECTION FOLDER LIST VIEWPORT -->
           </div>
         </div>
+
       </div>
     </div>
 
+    <!-- SECTION NEW FOLDER FORM -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="addNewFolder" aria-labelledby="offcanvasWithBackdropLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Create a new folder?</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form onsubmit="app.NotesController.newFolder(event)">
+          <span class="p-3">
+            <label for="folderName">Folder name:</label>
+            <input type="text" name="name" id="folderName" class="form-control mt-2 mx-3 w-75" minlength="3"
+              maxlength="15" required>
+          </span>
+          <span class="d-flex p-3">
+            <label for="folderColorPicker">Select a color: </label>
+            <input type="color" name="color" id="folderColorPicker" class="form-control ms-3 p-0 w-25" required>
+          </span>
+          <button type="submit" class="btn btn-success m-3">Create</button>
+        </form>
+      </div>
+    </div>
+    <!-- !SECTION NEW FOLDER FORM-->
 
+    <!-- SECTION NEW QUICK NOTE FORM -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addNewNote" aria-labelledby="offcanvasWithBackdropLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Add a new quick note?</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <form onsubmit="app.NotesController.createNote(event,true)">
+          <label for="title">Title your note:</label>
+          <input type="text" name="title" id="title" class="form-control" minlength="3" maxlength="15" required>
+          <label for="folder">Folder</label>
+          <select name="folder" id="folderList" class="form-control">
+            <!-- FOLDERS LIST IS DRAWN -->
+          </select>
+          <textarea name="body" id="noteBody" class="form-control mt-3" cols="30" rows="10"></textarea>
+          <button type="submit" class="btn btn-success m-3">Create</button>
+        </form>
+      </div>
+    </div>
+    <!-- !SECTION NEW QUICK NOTE FORM -->
 
-
+    <!-- !SECTION MAIN -->
   </main>
 
-  <!-- SECTION -->
+  <!-- SECTION FOOTER -->
   <footer class="bg-dark text-light">
     <div class="text-center no-select">
       <p class="mb-0"><small>Made with 💖 by CodeWorks</small></p>
     </div>
+    <!-- !SECTION FOOTER -->
   </footer>
 
 

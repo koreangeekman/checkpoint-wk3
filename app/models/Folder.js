@@ -9,10 +9,16 @@ export class Folder {
 
   get folderCard() {
     return `
-        <div onclick="" class="btn card folder text-center shadow" style="background-color: ${this.color};">
-          <i class="folderIcon text-secondary mdi mdi-folder"></i>
+        <div onclick="app.NotesController.selectFolder('${this.id}')" class="btn card folder text-center shadow" style="background-color: ${this.color};">
+          <i class="folderIcon mdi mdi-folder"></i>
           <p class="folderName fw-bold">${this.name}</p>
         </div>
         `
+  }
+
+  get folderList() {
+    return `
+    <option value="${this.name}">${this.name}</option>
+    `
   }
 }
