@@ -1,5 +1,4 @@
 import { AppState } from "../AppState.js";
-import { valuesService } from "../services/ValuesService.js";
 import { Pop } from "../utils/Pop.js";
 import { setHTML } from "../utils/Writer.js";
 
@@ -25,8 +24,6 @@ function _draw() {
 //Public
 export class ValuesController {
   constructor() {
-    AppState.on("values", _draw)
-    _draw()
   }
 
   addValue() {

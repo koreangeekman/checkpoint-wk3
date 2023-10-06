@@ -12,17 +12,17 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="assets/style/main.css">
   <link rel="stylesheet" href="assets/style/style.css">
-  <title>wk3</title>
+  <title>Checkpoint WK3</title>
 </head>
 
 <body>
   <!-- SECTION -->
   <header>
     <nav class="navbar navbar-dark navbar-expand bg-dark text-light no-select">
-      <a class="navbar-brand ms-3" href="#">
-        <img src="https://codeworks.blob.core.windows.net/public/assets/img/cw-mark.png" height="45" alt=""
-          loading="lazy">
-        <span class="ms-2">wk3</span>
+      <a class="navbar-brand ms-3" href="#"> <i class="mdi mdi-network-pos"></i>
+        <!-- <img src="https://codeworks.blob.core.windows.net/public/assets/img/cw-mark.png" height="45" alt=""
+          loading="lazy"> -->
+        <span class="ms-2">Checkpoint WK3 - Noteration</span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,15 +31,38 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <!-- NAVLINKS -->
-          <a href="#/about" class="nav-link">About</a>
+          <a href="#/notes" class="nav-link">Notes</a>
+          <!-- <a href="#/about" class="nav-link">About</a> -->
         </div>
       </div>
+      <span class="d-flex w-50 justify-content-between align-items-center fs-5">
+        <!-- total count stats -->
+        <p class="mb-0" id="totalFolderCount">Folders: #</p>
+        <p class="mb-0" id="totalNotesCount">Notes: #</p>
+        <i class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-note-plus"
+          onclick="app.NotesController.addNote()"></i>
+      </span>
     </nav>
   </header>
 
   <!-- SECTION -->
   <main id="router-view">
     <!-- PRIMARY VIEWPORT -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 p-3 d-flex align-items-center justify-content-center">
+          <div class="d-flex flex-row flex-wrap justi" id="folderList">
+            <!-- SECTION FOLDER LIST VIEWPORT -->
+            <!-- !SECTION FOLDER LIST VIEWPORT -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
   </main>
 
   <!-- SECTION -->

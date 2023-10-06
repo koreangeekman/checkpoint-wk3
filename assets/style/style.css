@@ -1,1 +1,33 @@
 /* BASIC STYLES HERE */
+
+.newNoteIcon {
+  /* font-size: ; */
+}
+
+.blueBG {
+  background-color: #123456;
+}
+
+.folder {
+  /* width: fit-content; */
+  margin: 1rem;
+  border-radius: 2rem;
+}
+
+.folderIcon {
+  font-size: 20rem;
+  z-index: 0;
+  line-height: 14rem;
+  position: relative;
+  top: 1rem;
+  color: whitesmoke;
+}
+
+.folderName {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  position: relative;
+  top: -6.9rem;
+}

@@ -7,6 +7,5 @@ export const AboutView = /*html*/`
       </p>
     </div>
   </div>
-  <div class="row" id="values"></div>
 </div>
 `
