@@ -18,7 +18,13 @@ function _drawFolderList(location) { // for form selection
 
 function _drawNotesListALL() { // for offcanvas left listing
   let contentHTML = '';
-  AppState.notes.forEach(note => contentHTML += note.notesList)
+  AppState.folders.forEach(folder => {
+    contentHTML += folder.noteListFolders
+    AppState.notes.filter(note => note.folder == folder.name).forEach(n => contentHTML += n.notesList)
+    contentHTML += `
+    </div>
+    `
+  })
   setHTML('allNotesList', contentHTML)
 }
 
@@ -56,7 +62,7 @@ function _drawFoldersALL() {
   _drawFolderList('folderList'); // for drop-down selection menu on 'quick note add' 
 }
 
-function _setFolder() {
+function _setFolder() { // set in DOM selection field
   if (AppState.activeFolder) {
     document.getElementById('folderList').value = AppState.activeFolder.name;
     return
@@ -72,6 +78,7 @@ export class NotesController {
     // _drawNotesListInFolder();
     // _drawNote();
     AppState.on('folders', _drawFoldersALL)
+    AppState.on('notes', _drawStats)
     AppState.on('notes', _drawNotesListALL)
     // AppState.on('notes', _drawNotesListInFolder)
   }
@@ -86,8 +93,9 @@ export class NotesController {
   selectNote(id) {
     notesService.selectNote(id);
     _drawNote(id);
-    _drawFolderList('noteCardFolderList'); //for the form select option
-    document.getElementById('noteCardFolderList').value = AppState.activeFolder.name;
+    _drawFolderList('noteCardFolderList'); //for the 'add quick note' form select option
+    document.getElementById('noteCardFolderList').value = AppState.activeFolder.name; // selects active folder
+    bootstrap.Offcanvas.getOrCreateInstance("#listAllNotes").hide();
   }
 
   newFolder(event) {
@@ -99,11 +107,10 @@ export class NotesController {
       bootstrap.Offcanvas.getOrCreateInstance("#addNewFolder").hide();
     } catch (error) {
       Pop.error('Something went wrong with form data collection..[folders]')
-      console.log('new folder attempt', error)
     }
   }
 
-  createNote(event, quickNote) {
+  createNote(event, quickNote) { // TODO new empty note in full card view when entering an empty folder?
     try {
       event.preventDefault();
       notesService.createNote(getFormData(event.target), quickNote);
@@ -112,7 +119,7 @@ export class NotesController {
       if (AppState.activeFolder) {
         _drawNotesListInFolder();
       }
-      bootstrap.Offcanvas.getOrCreateInstance("#addNewNote").hide();
+      // bootstrap.Offcanvas.getOrCreateInstance("#addNewNote").hide();
     } catch (error) {
       Pop.error('Something went wrong with form data collection..[notes]', error)
     }
@@ -122,10 +129,11 @@ export class NotesController {
     try {
       event.preventDefault();
       notesService.changeNote(getFormData(event.target));
-      event.target.reset();
+      // event.target.reset();
     } catch (error) {
-      Pop.error('Something went wrong with form data collection..[notes]', error)
+      Pop.error('Something went wrong with form data collection..[change notes]', error)
     }
+    this.clickOut();
   }
 
   async removeNote(id) {
@@ -134,6 +142,7 @@ export class NotesController {
     }
     notesService.removeNote(id);
     _drawNotesListInFolder();
+    _drawNotesListALL();
     // _drawFoldersALL();
   }
 

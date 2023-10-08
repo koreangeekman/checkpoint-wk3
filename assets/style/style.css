@@ -4,6 +4,10 @@ body {
   background-color: #123456;
 }
 
+small {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .newNoteIcon {
   /* font-size: 2rem; */
 }
@@ -14,6 +18,8 @@ body {
 
 .card {
   border-radius: 2rem;
+  border: 2px dashed white;
+  box-shadow: 0 0 5px white;
 }
 
 /* Folder styles */
@@ -43,23 +49,26 @@ body {
   top: -6.9rem;
 }
 
-/* ListAllNotes */
 
-.noteList {
-  font-size: 2rem;
-}
-
-.folderColorIcon {
-  color: #123456b0;
-}
-
-/* Primary Note Card */
-
-.notecard {
+.noteMiniCard {
   width: fit-content;
   margin: 1rem;
   padding-bottom: 3.5rem;
   border-radius: 2rem;
+}
+
+/* Primary Note Card */
+
+#noteID {
+  border: none;
+  background-color: transparent;
+  font-size: x-small;
+  text-align: right;
+  user-select: none;
+}
+
+#noteID:hover {
+  cursor: default;
 }
 
 .noteIcon {
@@ -88,6 +97,8 @@ body {
   padding: 5px;
 }
 
+/* overlay elements */
+
 #z0 {
   position: absolute;
   z-index: 0;
@@ -96,7 +107,7 @@ body {
 #z1 {
   z-index: 1;
   position: relative;
-  top: 5rem;
+  top: 10rem;
   width: fit-content;
 }
 

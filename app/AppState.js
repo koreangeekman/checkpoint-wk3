@@ -10,19 +10,19 @@ class ObservableAppState extends EventEmitter {
   // SECTION GLOBAL VARIABLES
 
   folders = [
-    new Folder({ name: 'General', color: '#123456' }),
-    new Folder({ name: 'ToDo', color: '#EE3456' }),
-    new Folder({ name: 'Private', color: '#121212' })
+    // new Folder({ name: 'General', color: '#123456' }),
+    // new Folder({ name: 'ToDo', color: '#EE3456' }),
+    // new Folder({ name: 'Private', color: '#121212' })
   ]
 
   notes = [
-    new Note({ title: 'ToDo List', body: "some ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
-    new Note({ title: 'ooga', body: "some general text" }),
-    new Note({ title: 'private note', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
-    new Note({ title: 'ToDo List 3', body: "some ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
-    new Note({ title: 'private note 22', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
-    new Note({ title: 'ToDo List 2', body: "some more ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
-    new Note({ title: 'ToDo List 4', body: "some more ToDo text", folder: 'ToDo' })
+    // new Note({ title: 'ToDo List', body: "some ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
+    // new Note({ title: 'ooga', body: "some general text" }),
+    // new Note({ title: 'private note', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
+    // new Note({ title: 'ToDo List 3', body: "some ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
+    // new Note({ title: 'private note 22', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
+    // new Note({ title: 'ToDo List 2', body: "some more ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
+    // new Note({ title: 'ToDo List 4', body: "some more ToDo text", folder: 'ToDo' })
   ]
 
   activeFolder = null

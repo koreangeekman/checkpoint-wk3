@@ -21,4 +21,14 @@ export class Folder {
     <option value="${this.name}">${this.name}</option>
     `
   }
+
+  get noteListFolders() {
+    return `
+    <span class="fs-4 d-flex">
+      <i class="pe-3 mdi mdi-folder" style="color: ${this.color};"></i>
+      <p class="mb-0">${this.name}</p>
+    </span>
+    <div class="ps-3 pb-3">
+    `
+  }
 }

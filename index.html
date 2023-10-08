@@ -18,7 +18,7 @@
 <body>
   <!-- SECTION HEADER -->
   <header>
-    <nav class="navbar navbar-dark navbar-expand bg-dark text-light no-select">
+    <nav class="navbar navbar-dark navbar-expand bg-dark text-light no-select" onclick="app.NotesController.clickOut()">
       <a class="navbar-brand ms-3" href="#"> <i class="mdi mdi-network-pos"></i>
         <!-- <img src="https://codeworks.blob.core.windows.net/public/assets/img/cw-mark.png" height="45" alt=""
           loading="lazy"> -->
@@ -31,7 +31,6 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <!-- NAVLINKS -->
-          <a href="#/notes" class="nav-link">Notes</a>
           <!-- <a href="#/about" class="nav-link">About</a> -->
         </div>
       </div>
@@ -46,6 +45,7 @@
           <i type="button" data-bs-toggle="offcanvas" data-bs-target="#listAllNotes"
             aria-controls="offcanvasWithBackdrop"
             class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-note-multiple"></i>
+          <p class="mb-0 d-inline pe-3">|</p>
           <i type="button" data-bs-toggle="offcanvas" data-bs-target="#addNewFolder"
             aria-controls="offcanvasWithBackdrop"
             class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-folder-plus"></i>
@@ -64,15 +64,16 @@
     <div class="container-fluid">
       <div class="row p-3 justify-content-center">
 
-        <div class="col-8 p-5 d-flex align-items-center justify-content-center d-none" onblur="" id="z2">
+        <!-- TODO add onblur functionality? onblur="app.NotesController.clickOut()" -->
+
+        <div class="col-8 d-flex align-items-center justify-content-center d-none" onblur="" id="z2">
           <div class="card w-100 justify-content-center shadow p-5" id="notesCard">
             <!-- SECTION NOTE CARD 'VIEWPORT' -->
             <!-- !SECTION NOTE CARD 'VIEWPORT' -->
           </div>
         </div>
 
-        <div class="col-auto p-5 d-flex align-items-center justify-content-center d-none"
-          onblur="app.NotesController.clickOut()" id="z1">
+        <div class="col-auto d-flex align-items-center justify-content-center d-none" id="z1">
           <div class="card d-flex flex-row flex-wrap justify-content-center p-2" id="notesList">
             <!-- SECTION NOTES LIST 'VIEWPORT' -->
             <!-- !SECTION NOTES LIST 'VIEWPORT' -->
@@ -96,7 +97,7 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body" id="allNotesList">
-        <!-- ALL NOTES ARE LISTED HERE -->
+        <!-- ALL NOTES GET LISTED OUT HERE -->
       </div>
     </div>
     <!-- !SECTION LIST ALL NOTES -->
