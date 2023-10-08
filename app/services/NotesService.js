@@ -22,6 +22,14 @@ function _setActiveNote(id) {
   AppState.activeNote = note;
 }
 
+function _unsetActiveFolder() {
+  AppState.activeFolder = null;
+}
+
+function _unsetActiveNote() {
+  AppState.activeNote = null;
+}
+
 function _createFolder(noteData, quickNote) { //based on note data
   const checkFolderName = AppState.folders.findIndex(folder => folder.name == noteData.folder);
   // console.log('folder exists check', checkFolderName);
@@ -40,19 +48,39 @@ function _createFolder(noteData, quickNote) { //based on note data
   console.log('Folder already exists', noteData.folder);
 }
 
-function _removeFolder(folderName) {
+function _removeFolderCheck(folderName) {
   const folderCheck = AppState.notes.findIndex(note => note.folder == folderName)
+  if (folderName == 'General') {
+    console.log('Will not delete the default [General] notes folder');
+    return
+  }
   if (folderCheck == -1) {
-    console.log('No more notes in folder, removing folder', folderName);
+    console.log(`No more notes in folder, remove ${folderName}?`);
+    _removeFolder(folderName);
+    return
+  }
+  console.log('There are still notes in ', folderName);
+}
+
+async function _removeFolder(folderName) {
+  if (await Pop.confirm('Last note in folder deleted.. remove Folder?')) {
     const folderIndex = AppState.folders.findIndex(folder => folder.name == folderName)
+    if (folderIndex == -1) {
+      console.log('Unable to find folder, ', folderName);
+      return
+    }
     AppState.folders.splice(folderIndex, 1)
     AppState.emit('folders')
     _saveFolders();
-    return
+    Pop.success('Folder deleted 🚮');
   }
-  console.log('There are still notes in this folder', AppState.notes);
 }
 
+function _assignFolderColorsToNotes() { // ensures correct folder color assignment to note
+  AppState.folders.forEach(folder => {
+    AppState.notes.filter(note => note.folder == folder.name ? note.folderColor = folder.color : null)
+  })
+}
 
 class NotesService {  // NOTES SERVICE CLASS
 
@@ -63,28 +91,35 @@ class NotesService {  // NOTES SERVICE CLASS
   createNote(noteData, quickNote) {
     _createFolder(noteData, quickNote)
     AppState.notes.push(new Note(noteData));
+    _assignFolderColorsToNotes();
     _saveNotes();
+    AppState.emit('notes');
   }
 
   selectFolder(id) {
     _setActiveFolder(id);
-    console.log(AppState.activeFolder);
+    _unsetActiveNote();
+    // console.log(AppState.activeFolder);
   }
 
   selectNote(id) {
     _setActiveNote(id);
-    console.log(AppState.activeNote);
+    // console.log(AppState.activeNote);
+  }
+
+  clickOut() {
+    _unsetActiveFolder();
+    _unsetActiveNote();
   }
 
   removeNote(id) {
-    const folderName = AppState.notes.find(note => note.id == id ? note.folder : null);
+    const folderName = AppState.notes.find(note => note.id == id).folder;
     console.log(folderName);
     const index = AppState.notes.findIndex(note => note.id == id);
-    AppState.notes.splice(index, 1)
-    _removeFolder(folderName) //checks if last note in folder, then removes
+    AppState.notes.splice(index, 1);
+    _removeFolderCheck(folderName) //checks if last note in folder, then removes
     _saveNotes();
-    Pop.success('Note deleted 🚮');
-
+    AppState.emit('notes');
   }
 
 }

@@ -16,6 +16,8 @@ body {
   border-radius: 2rem;
 }
 
+/* Folder styles */
+
 .folder {
   /* width: fit-content; */
   margin: 1rem;
@@ -40,6 +42,18 @@ body {
   position: relative;
   top: -6.9rem;
 }
+
+/* ListAllNotes */
+
+.noteList {
+  font-size: 2rem;
+}
+
+.folderColorIcon {
+  color: #123456b0;
+}
+
+/* Primary Note Card */
 
 .notecard {
   width: fit-content;
@@ -83,7 +97,7 @@ body {
   z-index: 1;
   position: relative;
   top: 5rem;
-  width: 100%;
+  width: fit-content;
 }
 
 #z2 {

@@ -43,6 +43,9 @@
         </span>
         <!-- NEW FOLDER / NOTE BUTTON -->
         <span class="px-2">
+          <i type="button" data-bs-toggle="offcanvas" data-bs-target="#listAllNotes"
+            aria-controls="offcanvasWithBackdrop"
+            class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-note-multiple"></i>
           <i type="button" data-bs-toggle="offcanvas" data-bs-target="#addNewFolder"
             aria-controls="offcanvasWithBackdrop"
             class="btn btn-success my-1 me-3 py-1 fs-2 newNoteIcon mdi mdi-folder-plus"></i>
@@ -61,25 +64,25 @@
     <div class="container-fluid">
       <div class="row p-3 justify-content-center">
 
-        <div class="col-8 p-5 d-flex align-items-center justify-content-center d-none" id="z2">
+        <div class="col-8 p-5 d-flex align-items-center justify-content-center d-none" onblur="" id="z2">
           <div class="card w-100 justify-content-center shadow p-5" id="notesCard">
-            <!-- SECTION NOTE CARD VIEWPORT -->
-
-            <!-- !SECTION NOTE CARD VIEWPORT -->
+            <!-- SECTION NOTE CARD 'VIEWPORT' -->
+            <!-- !SECTION NOTE CARD 'VIEWPORT' -->
           </div>
         </div>
 
-        <div class="col-12 p-5 d-flex align-items-center justify-content-center d-none" id="z1">
+        <div class="col-auto p-5 d-flex align-items-center justify-content-center d-none"
+          onblur="app.NotesController.clickOut()" id="z1">
           <div class="card d-flex flex-row flex-wrap justify-content-center p-2" id="notesList">
-            <!-- SECTION NOTES LIST VIEWPORT -->
-            <!-- !SECTION NOTES LIST VIEWPORT -->
+            <!-- SECTION NOTES LIST 'VIEWPORT' -->
+            <!-- !SECTION NOTES LIST 'VIEWPORT' -->
           </div>
         </div>
 
         <div class="col-12 pt-4 d-flex align-items-center justify-content-center" id="z0">
           <div class="d-flex flex-row flex-wrap" id="folderViewPort">
-            <!-- SECTION FOLDER LIST VIEWPORT -->
-            <!-- !SECTION FOLDER LIST VIEWPORT -->
+            <!-- SECTION FOLDER LIST 'VIEWPORT' -->
+            <!-- !SECTION FOLDER LIST 'VIEWPORT' -->
           </div>
         </div>
 
@@ -87,21 +90,34 @@
     </div>
 
     <!-- SECTION NEW FOLDER FORM -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="addNewFolder" aria-labelledby="offcanvasWithBackdropLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="listAllNotes" aria-labelledby="listAllNotesLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Create a new folder?</h5>
+        <h5 class="offcanvas-title" id="listAllNotesLabel">ALL NOTES</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="offcanvas-body">
-        <form onsubmit="app.NotesController.newFolder(event)">
-          <span class="p-3">
+      <div class="offcanvas-body" id="allNotesList">
+        <!-- ALL NOTES ARE LISTED HERE -->
+      </div>
+    </div>
+    <!-- !SECTION LIST ALL NOTES -->
+
+    <!-- SECTION NEW FOLDER FORM -->
+    <div class="offcanvas offcanvas-bottom px-md-5 py-md-3 d-flex justify-content-center" tabindex="-1"
+      id="addNewFolder" aria-labelledby="addNewFolderLabel">
+      <div class="offcanvas-header justify-content-center py-md-54">
+        <h5 class="offcanvas-title w-25 px-5" id="addNewFolderLabel">Create a new folder?</h5>
+        <button type="button" class="btn-close text-reset px-5" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body justify-content-center pt-md-5">
+        <form class="d-flex justify-content-evenly" onsubmit="app.NotesController.newFolder(event)">
+          <span class="ps-5">
             <label for="folderName">Folder name:</label>
             <input type="text" name="name" id="folderName" class="form-control mt-2 mx-3 w-75" minlength="3"
-              maxlength="15" required>
+              maxlength="12" required>
           </span>
-          <span class="d-flex p-3">
-            <label for="folderColorPicker">Select a color: </label>
-            <input type="color" name="color" id="folderColorPicker" class="form-control ms-3 p-0 w-25" required>
+          <span class="pe-5">
+            <label class="pb-2" for="folderColorPicker">Select a color: </label>
+            <input type="color" name="color" id="folderColorPicker" class="form-control ms-4 p-0 w-100" required>
           </span>
           <button type="submit" class="btn btn-success m-3">Create</button>
         </form>
@@ -110,13 +126,13 @@
     <!-- !SECTION NEW FOLDER FORM-->
 
     <!-- SECTION NEW QUICK NOTE FORM -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="addNewNote" aria-labelledby="offcanvasWithBackdropLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="addNewNote" aria-labelledby="addNewNoteLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Add a new quick note?</h5>
+        <h5 class="offcanvas-title" id="addNewNoteLabel">Add a new quick note?</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <form onsubmit="app.NotesController.createNote(event,true)">
+        <form onsubmit="app.NotesController.createNote(event,true)"> <!-- TRUE denotes quick-note feature -->
           <label for="title">Title your note:</label>
           <input type="text" name="title" id="title" class="form-control" minlength="3" maxlength="15" required>
           <label for="folder">Folder</label>

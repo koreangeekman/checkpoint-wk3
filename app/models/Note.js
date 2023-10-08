@@ -12,10 +12,19 @@ export class Note {
     this.body = data.body ? data.body : ''
   }
 
-  get noteList() {
+  get notesList() {
+    return `
+      <div onclick="app.NotesController.selectNote('${this.id}')" class="d-flex flex-row align-items-center my-3 btn card shadow noteList">
+        <i class="folderColorIcon mdi mdi-circle" style="color: ${this.folderColor};"></i>
+        <p class="ps-3 mb-0">${this.title}</p>
+      </div>
+    `
+
+  }
+  get noteMiniCard() {
     return `
       <div onclick="app.NotesController.selectNote('${this.id}')" class="btn card notecard text-center shadow">
-        <i class="noteIcon mdi mdi-note-text" style=""></i>
+        <i class="noteIcon mdi mdi-note-text"></i>
         <p class="noteName fw-bold backdrop">${this.title}</p>
       </div>
     `

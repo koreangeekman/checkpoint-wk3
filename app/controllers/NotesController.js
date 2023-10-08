@@ -1,6 +1,4 @@
 import { AppState } from "../AppState.js"
-import { Folder } from "../models/Folder.js";
-import { Note } from "../models/Note.js";
 import { notesService } from "../services/NotesService.js"
 import { getFormData } from "../utils/FormHandler.js";
 import { Pop } from "../utils/Pop.js"
@@ -12,16 +10,22 @@ function _drawFolders() { //always drawn in the bg
   setHTML('folderViewPort', contentHTML)
 }
 
-function _drawFolderList(location) {
+function _drawFolderList(location) { // for form selection
   let contentHTML = '';
   AppState.folders.forEach(folder => contentHTML += folder.folderList)
   setHTML(location, contentHTML)
 }
 
+function _drawNotesListALL() { // for offcanvas left listing
+  let contentHTML = '';
+  AppState.notes.forEach(note => contentHTML += note.notesList)
+  setHTML('allNotesList', contentHTML)
+}
+
 function _drawNotesListInFolder() {
   let folder = AppState.activeFolder;
   let contentHTML = '';
-  AppState.notes.forEach(note => note.folder == folder.name ? contentHTML += note.noteList : '')
+  AppState.notes.forEach(note => note.folder == folder.name ? contentHTML += note.noteMiniCard : '')
   setHTML('notesList', contentHTML)
   document.getElementById('notesList').style.backgroundColor = folder.color;
   document.getElementById('z2').classList.add('d-none')
@@ -52,19 +56,30 @@ function _drawFoldersALL() {
   _drawFolderList('folderList'); // for drop-down selection menu on 'quick note add' 
 }
 
+function _setFolder() {
+  if (AppState.activeFolder) {
+    document.getElementById('folderList').value = AppState.activeFolder.name;
+    return
+  }
+  document.getElementById('folderList').value = 'General';
+}
 
 export class NotesController {
 
   constructor() {
     _drawFoldersALL();
+    _drawNotesListALL();
     // _drawNotesListInFolder();
     // _drawNote();
     AppState.on('folders', _drawFoldersALL)
+    AppState.on('notes', _drawNotesListALL)
     // AppState.on('notes', _drawNotesListInFolder)
   }
 
+
   selectFolder(id) {
     notesService.selectFolder(id);
+    _setFolder();
     _drawNotesListInFolder();
   }
 
@@ -74,12 +89,14 @@ export class NotesController {
     _drawFolderList('noteCardFolderList'); //for the form select option
     document.getElementById('noteCardFolderList').value = AppState.activeFolder.name;
   }
+
   newFolder(event) {
     try {
       event.preventDefault();
       notesService.newFolder(getFormData(event.target));
       event.target.reset();
-      _drawFolders();
+      _drawFoldersALL();
+      bootstrap.Offcanvas.getOrCreateInstance("#addNewFolder").hide();
     } catch (error) {
       Pop.error('Something went wrong with form data collection..[folders]')
       console.log('new folder attempt', error)
@@ -91,6 +108,11 @@ export class NotesController {
       event.preventDefault();
       notesService.createNote(getFormData(event.target), quickNote);
       event.target.reset();
+      _drawFoldersALL();
+      if (AppState.activeFolder) {
+        _drawNotesListInFolder();
+      }
+      bootstrap.Offcanvas.getOrCreateInstance("#addNewNote").hide();
     } catch (error) {
       Pop.error('Something went wrong with form data collection..[notes]', error)
     }
@@ -106,15 +128,18 @@ export class NotesController {
     }
   }
 
-  removeNote(id) {
+  async removeNote(id) {
+    if (!(await Pop.confirm('Delete note?'))) {
+      return
+    }
     notesService.removeNote(id);
     _drawNotesListInFolder();
+    // _drawFoldersALL();
   }
 
   clickOut() {
-    document.getElementById('z1').classList.add('d-none')
-    document.getElementById('z2').classList.add('d-none')
-    AppState.activeFolder = null;
-    AppState.activeNote = null;
+    document.getElementById('z1').classList.add('d-none');
+    document.getElementById('z2').classList.add('d-none');
+    notesService.clickOut();
   }
 }

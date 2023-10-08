@@ -21,7 +21,8 @@ class ObservableAppState extends EventEmitter {
     new Note({ title: 'private note', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
     new Note({ title: 'ToDo List 3', body: "some ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
     new Note({ title: 'private note 22', body: "some Private text", folder: 'Private', folderColor: '#121212' }),
-    new Note({ title: 'ToDo List 2', body: "some more ToDo text", folder: 'ToDo', folderColor: '#EE3456' })
+    new Note({ title: 'ToDo List 2', body: "some more ToDo text", folder: 'ToDo', folderColor: '#EE3456' }),
+    new Note({ title: 'ToDo List 4', body: "some more ToDo text", folder: 'ToDo' })
   ]
 
   activeFolder = null
@@ -34,7 +35,6 @@ class ObservableAppState extends EventEmitter {
   init() {
     this.folders = loadState('folders', [Folder])
     this.notes = loadState('notes', [Note])
-
   }
 }
 
